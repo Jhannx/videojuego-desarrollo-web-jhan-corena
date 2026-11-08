@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto Invasión Alienígena</title>
+
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/hud.css">
+</head>
+<body>
+  <div id="game-container">
+
+    <!-- Fondo de escenario -->
+    <div id="scene-background" class="layer bg-layer"></div>
+
+    <!-- Elementos interactivos del escenario -->
+    <div id="scene-elements" class="layer elements-layer"></div>
+
+    <!-- Jugador -->
+    <div id="player-container" class="layer player-layer">
+      <img id="jugador" src="resources/img/protagonista.png" alt="Protagonista" class="player-sprite hidden">
+    </div>
+
+    <!-- Modales de puzzles -->
+    <div id="puzzle-overlay" class="layer overlay-layer hidden"></div>
+
+    <!-- Pantalla de inicio y selección de dificultad -->
+    <div id="title-screen" class="layer title-layer">
+      <div class="title-card">
+        <h1 class="title-main">INVASIÓN ALIENÍGENA</h1>
+        <p class="title-sub">SELECCIONA LA DIFICULTAD</p>
+
+        <div class="difficulty-selector">
+          <button type="button" class="retro-btn diff-btn" data-diff="facil">FÁCIL</button>
+          <button type="button" class="retro-btn diff-btn active" data-diff="medio">MEDIO</button>
+          <button type="button" class="retro-btn diff-btn" data-diff="dificil">DIFÍCIL</button>
+        </div>
+
+        <button id="btn-start-game" type="button" class="retro-btn start-btn">INICIAR JUEGO</button>
+      </div>
+    </div>
+
+    <!-- Interfaz de usuario fija -->
+    <div id="ui-layer" class="layer ui-layer">
+
+      <header id="hud-bar">
+        <div id="hud-lives">
+          <span class="hud-label">VIDAS:</span>
+          <span id="lives-counter">3</span>
+        </div>
+        <div id="hud-scene-title">ACTO 1: CELDA DE CONTENCIÓN</div>
+        <button id="btn-audio-toggle" class="retro-btn hud-sound-btn" type="button">
+          🔊 AUDIO
+        </button>
+      </header>
+
+      <div id="dialog-box" class="dialog-box hidden">
+        <div id="dialog-speaker" class="dialog-speaker">Aliado en las sombras:</div>
+        <p id="dialog-text"></p>
+        <button id="dialog-btn-next" class="retro-btn">Continuar [E]</button>
+      </div>
+
+      <footer id="hotbar">
+        <div class="hotbar-slot" data-slot="0" title="Ranura 1: Bobina de Alto Voltaje (1957)"></div>
+        <div class="hotbar-slot" data-slot="1" title="Ranura 2: Bio-Chip Orgánico (1998)"></div>
+        <div class="hotbar-slot" data-slot="2" title="Ranura 3: Código de Resonancia (2077)"></div>
+        <div class="hotbar-slot" data-slot="3" title="Ranura 4: Cañón Bio-EMP Ensamblado (2027)"></div>
+      </footer>
+
+    </div>
+
+    <!-- Reproductor de cinemáticas -->
+    <div id="cinematic-overlay" class="layer cinematic-layer hidden">
+      <video id="cinematic-player" playsinline></video>
+      <button id="skip-cinematic-btn" class="retro-btn skip-btn" type="button">Saltar [Espacio]</button>
+    </div>
+
+    <audio id="bgm-player" loop preload="auto"></audio>
+
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

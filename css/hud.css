@@ -1,0 +1,986 @@
+/* Pantalla de inicio y selector de dificultad */
+.title-layer {
+  z-index: 150;
+  pointer-events: auto;
+  background: rgba(4, 7, 14, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title-card {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  background: #0d121c;
+  border: 3px solid #00d2d3;
+  border-radius: 8px;
+  padding: 36px 48px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 210, 211, 0.3);
+}
+
+.title-main {
+  font-size: 32px;
+  letter-spacing: 4px;
+  color: #00d2d3;
+  text-shadow: 0 0 14px rgba(0, 210, 211, 0.8);
+}
+
+.title-sub {
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: #a4b0be;
+}
+
+.difficulty-selector {
+  display: flex;
+  gap: 12px;
+  margin: 6px 0;
+}
+
+.diff-btn {
+  padding: 8px 16px;
+  font-size: 13px;
+}
+
+.diff-btn.active {
+  background: #00d2d3;
+  color: #000;
+  border-color: #00d2d3;
+  font-weight: bold;
+}
+
+.start-btn {
+  background: #2ed573;
+  color: #000;
+  border-color: #2ed573;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 12px 28px;
+  letter-spacing: 2px;
+  margin-top: 8px;
+}
+
+.start-btn:hover {
+  background: #26af5f;
+  border-color: #26af5f;
+}
+
+/* Barra superior HUD */
+#hud-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  background: linear-gradient(to bottom, rgba(5, 7, 12, 0.92) 0%, rgba(5, 7, 12, 0.5) 75%, transparent 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  pointer-events: auto;
+}
+
+#hud-lives {
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: #ff4757;
+  text-shadow: 0 0 8px rgba(255, 71, 87, 0.7);
+}
+
+.hud-label {
+  color: #a4b0be;
+  margin-right: 6px;
+}
+
+#hud-scene-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #2ed573;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(46, 213, 115, 0.6);
+}
+
+.hud-sound-btn {
+  font-size: 13px;
+  padding: 6px 14px;
+  background: rgba(30, 39, 46, 0.85);
+  border: 2px solid #57606f;
+  color: #00d2d3;
+}
+
+.hud-sound-btn.muted {
+  border-color: #ff4757;
+  color: #ff4757;
+}
+
+/* Cuadro de diálogo */
+.dialog-box {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 82%;
+  max-width: 900px;
+  background-color: rgba(15, 20, 32, 0.95);
+  border: 3px solid #70a1ff;
+  border-radius: 6px;
+  padding: 18px 24px;
+  color: #f1f2f6;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.85), inset 0 0 15px rgba(112, 161, 255, 0.15);
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dialog-speaker {
+  font-size: 14px;
+  font-weight: bold;
+  color: #ffa502;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+#dialog-text {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #ced6e0;
+}
+
+/* Inventario inferior lateral */
+#hotbar {
+  position: absolute;
+  bottom: 16px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+  background: rgba(18, 22, 33, 0.94);
+  padding: 8px 12px;
+  border: 3px solid #485460;
+  border-radius: 6px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), inset 0 0 10px rgba(0, 0, 0, 0.6);
+  pointer-events: auto;
+  z-index: 100;
+}
+
+.hotbar-slot {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  background: #1e272e;
+  border: 3px solid #718093;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.1), inset -2px -2px 0 rgba(0, 0, 0, 0.5);
+  transition: transform 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hotbar-slot::before {
+  content: attr(data-slot);
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  font-size: 10px;
+  color: #747d8c;
+  pointer-events: none;
+}
+
+.hotbar-slot:hover {
+  border-color: #ffa502;
+  transform: scale(1.05);
+}
+
+.hotbar-slot.filled {
+  border-color: #2ed573;
+  box-shadow: 0 0 12px rgba(46, 213, 115, 0.5);
+}
+
+.hotbar-slot img {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* Botones y puntos interactivos */
+.retro-btn {
+  background: #2f3542;
+  color: #fff;
+  border: 2px solid #747d8c;
+  border-radius: 3px;
+  padding: 8px 18px;
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  align-self: flex-end;
+  text-shadow: 1px 1px 2px #000;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+
+.retro-btn:hover {
+  background: #485460;
+  border-color: #ffa502;
+  transform: translateY(-1px);
+}
+
+.retro-btn:active {
+  transform: translateY(1px);
+}
+
+.skip-btn {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  z-index: 210;
+  background: rgba(47, 53, 66, 0.85);
+  border-color: #ff4757;
+  color: #ff6b81;
+}
+
+.interactive-hotspot {
+  position: absolute;
+  cursor: pointer;
+  border: 2px dashed rgba(255, 165, 2, 0.6);
+  background: rgba(255, 165, 2, 0.15);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  transition: all 0.25s ease;
+}
+
+.interactive-hotspot:hover {
+  border-color: #ffa502;
+  background: rgba(255, 165, 2, 0.35);
+  box-shadow: 0 0 15px rgba(255, 165, 2, 0.6);
+  transform: scale(1.03);
+}
+
+.hotspot-badge {
+  background: #000;
+  border: 1px solid #ffa502;
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: #ffa502;
+}
+
+/* Modal de Acertijos y Construcción del Portal */
+.puzzle-modal {
+  width: 580px;
+  max-width: 90%;
+  background: #0d121c;
+  border: 3px solid #00d2d3;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 0 35px rgba(0, 0, 0, 0.95), 0 0 15px rgba(0, 210, 211, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.puzzle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 210, 211, 0.3);
+  padding-bottom: 8px;
+}
+
+.puzzle-title {
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: #00d2d3;
+}
+
+.puzzle-body {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #ced6e0;
+  background: #04090d;
+  border: 1px solid #1e272e;
+  border-radius: 5px;
+  padding: 14px;
+}
+
+.puzzle-formula {
+  margin-top: 8px;
+  color: #ffa502;
+  font-weight: bold;
+}
+
+.puzzle-pregunta {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #ffa502;
+}
+
+.puzzle-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.puzzle-option-btn {
+  background: #1b2434;
+  color: #f1f2f6;
+  border: 2px solid #3742fa;
+  border-radius: 5px;
+  padding: 12px 14px;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.1s ease;
+}
+
+.puzzle-option-btn:hover:not(:disabled) {
+  background: #243048;
+  border-color: #70a1ff;
+  color: #fff;
+}
+
+.puzzle-option-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.puzzle-status-msg {
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-align: center;
+  min-height: 18px;
+  color: #a4b0be;
+}
+
+.puzzle-status-msg.error {
+  color: #ff4757;
+  font-weight: bold;
+}
+
+.puzzle-status-msg.success {
+  color: #2ed573;
+  font-weight: bold;
+}
+
+/* Teclado numérico de la celda */
+.keypad-modal {
+  width: 360px;
+  background: #0d121c;
+  border: 3px solid #00d2d3;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 0 35px rgba(0, 0, 0, 0.95), 0 0 15px rgba(0, 210, 211, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.keypad-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 210, 211, 0.3);
+  padding-bottom: 8px;
+}
+
+.keypad-title {
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  color: #00d2d3;
+}
+
+.keypad-btn-close {
+  background: transparent;
+  border: 1px solid #747d8c;
+  color: #a4b0be;
+  width: 26px;
+  height: 26px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.keypad-btn-close:hover {
+  background: #ff4757;
+  border-color: #ff4757;
+  color: #fff;
+}
+
+.keypad-screen {
+  background: #04090d;
+  border: 2px solid #1e272e;
+  border-radius: 5px;
+  padding: 12px;
+  text-align: center;
+}
+
+.keypad-display {
+  font-size: 32px;
+  font-weight: bold;
+  letter-spacing: 8px;
+  color: #2ed573;
+  text-shadow: 0 0 10px rgba(46, 213, 115, 0.7);
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.keypad-display.access-granted {
+  color: #00d2d3;
+  text-shadow: 0 0 18px rgba(0, 210, 211, 1);
+}
+
+.keypad-status-msg {
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: #a4b0be;
+  margin-top: 6px;
+  min-height: 16px;
+}
+
+.keypad-status-msg.error {
+  color: #ff4757;
+  font-weight: bold;
+}
+
+.keypad-status-msg.success {
+  color: #2ed573;
+  font-weight: bold;
+}
+
+.keypad-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.keypad-btn {
+  background: #1b2434;
+  color: #f1f2f6;
+  border: 2px solid #3742fa;
+  border-radius: 5px;
+  padding: 12px 0;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #0d121c;
+}
+
+.keypad-btn:hover {
+  background: #243048;
+  border-color: #70a1ff;
+}
+
+.keypad-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #0d121c;
+}
+
+.keypad-btn-clear {
+  border-color: #ff4757;
+  color: #ff6b81;
+  font-size: 12px;
+}
+
+.keypad-btn-enter {
+  border-color: #2ed573;
+  color: #2ed573;
+  font-size: 12px;
+}
+
+/* Acertijo y puzzle de cables 2077 */
+.riddle-note-card {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 620px;
+  max-width: 92%;
+  background: rgba(10, 16, 26, 0.96);
+  border: 2px solid #00d2d3;
+  border-radius: 6px;
+  padding: 12px 18px;
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.95), 0 0 15px rgba(0, 210, 211, 0.3);
+  z-index: 150;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+.riddle-note-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 210, 211, 0.3);
+  padding-bottom: 6px;
+}
+
+.riddle-note-title {
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: #00d2d3;
+}
+
+.riddle-note-close {
+  background: #ff4757;
+  color: #fff;
+  border: 1px solid #ff6b81;
+  border-radius: 4px;
+  padding: 5px 12px;
+  font-size: 11px;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.riddle-note-close:hover {
+  background: #ee5253;
+  box-shadow: 0 0 10px rgba(255, 71, 87, 0.7);
+}
+
+.riddle-note-body {
+  font-size: 12px;
+  line-height: 1.45;
+  color: #ced6e0;
+}
+
+.riddle-note-body p {
+  margin-bottom: 4px;
+}
+
+.riddle-note-body ul {
+  list-style: none;
+  padding-left: 6px;
+  margin-bottom: 4px;
+}
+
+.riddle-note-body li {
+  margin-bottom: 2px;
+}
+
+.riddle-open-btn {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  z-index: 150;
+  background: rgba(13, 18, 28, 0.95);
+  border: 2px solid #00d2d3;
+  color: #00d2d3;
+  padding: 7px 16px;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  pointer-events: auto;
+  font-family: inherit;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.85);
+  transition: all 0.15s ease;
+}
+
+.riddle-open-btn:hover {
+  background: #00d2d3;
+  color: #000;
+  box-shadow: 0 0 14px rgba(0, 210, 211, 0.8);
+}
+
+/* Conectores de cables */
+.cable-node {
+  position: absolute;
+  padding: 6px 12px;
+  border-radius: 4px;
+  background: rgba(15, 20, 32, 0.92);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: bold;
+  cursor: pointer;
+  border: 2px solid;
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.75);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  pointer-events: auto;
+  user-select: none;
+  white-space: nowrap;
+  z-index: 30;
+}
+
+.cable-node:hover {
+  transform: scale(1.06);
+}
+
+.cable-node.selected {
+  outline: 2px solid #fff;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
+  animation: pulse-node 0.8s infinite alternate;
+}
+
+@keyframes pulse-node {
+  from { transform: scale(1.02); }
+  to { transform: scale(1.08); }
+}
+
+.cable-node.connected {
+  box-shadow: 0 0 12px currentColor;
+}
+
+/* Hotspot del interruptor central */
+.switch-center-hotspot {
+  position: absolute;
+  left: 610px;
+  top: 290px;
+  width: 70px;
+  height: 140px;
+  cursor: pointer;
+  z-index: 35;
+  border: 2px dashed rgba(46, 213, 115, 0.4);
+  border-radius: 4px;
+  background: rgba(46, 213, 115, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  transition: all 0.2s ease;
+}
+
+.switch-center-hotspot:hover {
+  border-color: #2ed573;
+  background: rgba(46, 213, 115, 0.25);
+  box-shadow: 0 0 16px rgba(46, 213, 115, 0.6);
+}
+
+/* Barra de control inferior */
+.cables-control-bar {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: rgba(10, 16, 26, 0.94);
+  border: 2px solid #485460;
+  border-radius: 6px;
+  padding: 10px 18px;
+  z-index: 80;
+  pointer-events: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
+}
+
+.cables-status-text {
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #00d2d3;
+  min-height: 16px;
+  text-align: center;
+}
+
+.cables-status-text.error {
+  color: #ff4757;
+  font-weight: bold;
+}
+
+.cables-status-text.success {
+  color: #2ed573;
+  font-weight: bold;
+}
+
+.cables-btn-group {
+  display: flex;
+  gap: 12px;
+}
+
+.cables-btn-switch {
+  background: #2ed573;
+  color: #000;
+  border: 2px solid #2ed573;
+  font-weight: bold;
+  font-size: 13px;
+  padding: 8px 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.cables-btn-switch:hover {
+  background: #26af5f;
+}
+
+.cables-btn-reset {
+  background: #2f3542;
+  color: #ced6e0;
+  border: 1px solid #747d8c;
+  font-size: 12px;
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.cables-btn-reset:hover {
+  background: #ff4757;
+  color: #fff;
+}
+
+/* Pantalla y terminal de código 2077 */
+.terminal-screen-container {
+  position: absolute;
+  top: 155px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 450px;
+  height: 345px;
+  background: rgba(3, 12, 16, 0.94);
+  border: 2px solid #00d2d3;
+  border-radius: 10px;
+  box-shadow: inset 0 0 25px rgba(0, 210, 211, 0.35), 0 0 20px rgba(0, 0, 0, 0.95);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 40;
+  pointer-events: auto;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.terminal-title-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 210, 211, 0.15);
+  border-bottom: 1px solid rgba(0, 210, 211, 0.4);
+  padding: 4px 10px;
+  user-select: none;
+}
+
+.terminal-title-text {
+  font-size: 11px;
+  font-weight: bold;
+  color: #00d2d3;
+  letter-spacing: 1px;
+}
+
+.terminal-status-badge {
+  font-size: 9px;
+  font-weight: bold;
+  color: #2ed573;
+  letter-spacing: 1px;
+}
+
+.terminal-editor-body {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  background: #02080c;
+}
+
+.terminal-line-numbers {
+  width: 34px;
+  background: rgba(0, 0, 0, 0.5);
+  border-right: 1px solid rgba(0, 210, 211, 0.2);
+  color: #485460;
+  font-size: 11px;
+  line-height: 1.45;
+  padding: 6px 4px;
+  text-align: right;
+  user-select: none;
+  overflow: hidden;
+  white-space: pre;
+}
+
+.terminal-code-textarea {
+  flex: 1;
+  height: 100%;
+  background: transparent;
+  color: #2ed573;
+  border: none;
+  outline: none;
+  resize: none;
+  font-family: inherit;
+  font-size: 11px;
+  line-height: 1.45;
+  padding: 6px 8px;
+  white-space: pre;
+  overflow-x: auto;
+  overflow-y: auto;
+  tab-size: 4;
+  caret-color: #00d2d3;
+}
+
+.terminal-code-textarea::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.terminal-code-textarea::-webkit-scrollbar-thumb {
+  background: #00d2d3;
+  border-radius: 2px;
+}
+
+.terminal-footer-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  background: rgba(5, 12, 18, 0.96);
+  border-top: 1px solid rgba(0, 210, 211, 0.3);
+  padding: 6px 10px;
+  user-select: none;
+}
+
+.terminal-status-msg {
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  color: #00d2d3;
+  text-align: center;
+  min-height: 12px;
+  font-weight: bold;
+}
+
+.terminal-status-msg.error {
+  color: #ff4757;
+}
+
+.terminal-status-msg.success {
+  color: #2ed573;
+}
+
+.terminal-btn-group {
+  display: flex;
+  gap: 8px;
+}
+
+.terminal-btn-inject {
+  background: #2ed573;
+  color: #000;
+  border: 2px solid #2ed573;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  padding: 5px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.terminal-btn-inject:hover {
+  background: #26af5f;
+  box-shadow: 0 0 10px rgba(46, 213, 115, 0.7);
+}
+
+.terminal-btn-inject:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.terminal-btn-reset-code {
+  background: #2f3542;
+  color: #ced6e0;
+  border: 1px solid #747d8c;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.terminal-btn-reset-code:hover {
+  background: #ff4757;
+  color: #fff;
+}
+
+/* Vórtice del portal encendido y pantalla final de victoria */
+.portal-vortex {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 306px;
+  height: 306px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(224, 247, 255, 0.95) 0%,
+    rgba(0, 210, 211, 0.85) 28%,
+    rgba(142, 68, 173, 0.88) 62%,
+    rgba(74, 20, 140, 0.4) 85%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 45px 15px rgba(155, 89, 182, 0.8),
+    0 0 90px 30px rgba(0, 210, 211, 0.45),
+    inset 0 0 35px rgba(255, 255, 255, 0.75);
+  animation: portal-pulse 2.2s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes portal-pulse {
+  from {
+    transform: translate(-50%, -50%) scale(0.97);
+    filter: hue-rotate(0deg) brightness(1);
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1.03);
+    filter: hue-rotate(18deg) brightness(1.15);
+  }
+}
+
+.victory-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 250;
+  background: radial-gradient(circle at center, rgba(13, 25, 42, 0.96) 0%, rgba(4, 7, 14, 0.99) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+.victory-card {
+  text-align: center;
+  max-width: 860px;
+  padding: 48px 56px;
+  background: rgba(13, 18, 28, 0.95);
+  border: 3px solid #2ed573;
+  border-radius: 10px;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(46, 213, 115, 0.45);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+
+.victory-title {
+  font-size: 36px;
+  line-height: 1.3;
+  letter-spacing: 3px;
+  color: #2ed573;
+  text-shadow: 0 0 18px rgba(46, 213, 115, 0.85);
+}
+
+.victory-sub {
+  font-size: 15px;
+  color: #ced6e0;
+  letter-spacing: 1.5px;
+}
